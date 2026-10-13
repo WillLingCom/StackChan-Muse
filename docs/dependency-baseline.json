@@ -1,0 +1,187 @@
+{
+  "dependencies": {
+    "espressif/bmi270": {
+      "component_hash": "a234ece0bea3595c45bb75f80449b823b366ca677aed6e3d4c35f14c90c4ace5",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.1.0"
+    },
+    "espressif/cjson": {
+      "component_hash": "e788323270d90738662d66fffa910bfe1fba019bba087f01557e70c40485b469",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "1.7.19~2"
+    },
+    "espressif/cmake_utilities": {
+      "component_hash": "351350613ceafba240b761b4ea991e0f231ac7a9f59a9ee901f751bddc0bb18f",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "0.5.3"
+    },
+    "espressif/esp_cam_sensor": {
+      "component_hash": "902c305b77f7c42b60fff5a084e397694f8a3fd6e6b72299996a7c856666e983",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "2.0.1"
+    },
+    "espressif/esp_codec_dev": {
+      "component_hash": "df70f10af8d7b922add7b9d07372c9c97ab356e58d72b7a892050227c2d44348",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "1.5.11"
+    },
+    "espressif/esp_io_expander": {
+      "component_hash": "7b7f91270172e46ca4597e3874f48d8412e280e8c295559f5922ec38656e3e5f",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.2.1"
+    },
+    "espressif/esp_io_expander_aw9523": {
+      "component_hash": "be562b62a1741ab41fbaf2a296702214b5c087ae8c88299a59fade8c3d8a7322",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.0.0"
+    },
+    "espressif/esp_lcd_ili9341": {
+      "component_hash": "840387ee0c90a473e43fdc75570f77c52f06423aa331d95479bde8b418c43547",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "2.1.0"
+    },
+    "espressif/esp_lcd_touch": {
+      "component_hash": "3f85a7d95af876f1a6ecca8eb90a81614890d0f03a038390804e5a77e2caf862",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.2.1"
+    },
+    "espressif/esp_lcd_touch_ft5x06": {
+      "component_hash": "d49f3dec3ae89617c31d96ac6f31bbc3212a0f049354eabd55c9457e454c56ae",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.1.1"
+    },
+    "espressif/esp_lvgl_port": {
+      "component_hash": "d3c020b45c3dfc0d1706a83b63a1c34a6eb444a6e935f9afff79f92b7b94dcef",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "2.9.0"
+    },
+    "espressif/esp_new_jpeg": {
+      "component_hash": "e1e7e6991193c41ed6c9fc386702aa7821433319e7aa9c3147cd3236310cd69c",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "1.0.2"
+    },
+    "espressif/esp_sccb_intf": {
+      "component_hash": "eb6a7d5c992f09583c163b2e3f5e95a0fdc87a2d9f8e026f3e59153935553889",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "0.0.9"
+    },
+    "espressif/esp_video": {
+      "component_hash": "ba8f4aa63ad9bda3cc18a3afe1b9ba5b39c7359a6ad79392a94e42ba8cf9e5f8",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "2.0.1"
+    },
+    "espressif/esp_websocket_client": {
+      "component_hash": "ae561d39222a399ddda5e470913c3d54a3c0f53dce15b8d21a3aaa4226dd74b1",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "1.2.3"
+    },
+    "espressif/i2c_bus": {
+      "component_hash": "483112c1619c54c38d0b734fb25f1678733267858a77b7af2f48cc7db6dbbd84",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.5.2"
+    },
+    "espressif/led_strip": {
+      "component_hash": "28621486f77229aaf81c71f5e15d6fbf36c2949cf11094e07090593e659e7639",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "3.0.3"
+    },
+    "espressif/m5stack_core_s3": {
+      "component_hash": "99cb3d730e1719211d0f6c2309109f672f9127c9ea90bef85b8b2b99ea074940",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "4.1.0"
+    },
+    "espressif/sensor_hub": {
+      "component_hash": "ea30db551c34aee2862482abf8b3164dd3855ecb4b4659b1e6878455c9cb9e22",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "0.1.5"
+    },
+    "espressif/usb": {
+      "component_hash": "99eee72ea224d9117d4c342442717a1f20bf8112e2ab5d7d7038b827874f4c92",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "1.6.0"
+    },
+    "espressif/usb_host_uvc": {
+      "component_hash": "f20c4e4dea50536e2e29daaf589b5f5984402284c155867daef27d6b64869f78",
+      "source": {
+        "registry_url": "https://components.espressif.com",
+        "type": "service"
+      },
+      "version": "2.4.2"
+    },
+    "idf": {
+      "source": {
+        "type": "idf"
+      },
+      "version": "6.0.1"
+    },
+    "lvgl/lvgl": {
+      "component_hash": "184e532558c1c45fefed631f3e235423d22582aafb4630f3e8885c35281a49ae",
+      "source": {
+        "registry_url": "https://components.espressif.com/",
+        "type": "service"
+      },
+      "version": "9.5.0"
+    }
+  },
+  "target": "esp32s3"
+}

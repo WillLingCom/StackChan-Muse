@@ -1,0 +1,69 @@
+# Local credentials and captures
+private/
+backups/
+.env
+.env.*
+!.env.example
+*.local
+*.local.cfg
+*.bin.local
+.sdk-token
+config.local*
+
+# Generated ESP-IDF files and firmware images
+build/
+build-*/
+managed_components/
+sdkconfig
+sdkconfig.old
+*.bin
+*.elf
+*.map
+*.log
+*.o
+*.a
+
+# Personal recordings and flash backups
+*.wav
+*.mp3
+!firmware/esp32/components/muse/test_reply.mp3
+*.pcm
+*.raw
+*.dump
+
+# Personal signing keys; the public upstream development fixture is required
+*.key
+*.pem
+!firmware/esp32/dev_signing_key.pem
+
+# Local tooling
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.idea/
+.vscode/
+.claude/
+.codex/
+muse-simulator.ppm
+
+# Local audit, downloads and build tools; defaults and dependency lock stay public.
+.audit/
+.cache/
+.cache-*/
+*.obj
+*.dylib
+*.so
+*.zip
+*.tar.gz
+*.bak
+*.prev
+compile_commands.json
+!firmware/esp32/dependencies.lock
+
+# License-excluded assets must never enter the public index.
+/firmware/esp32/avatar/muse_pixel.c
+/firmware/esp32/avatar/jollybot.gif
+/firmware/esp32/avatar/happy_anim.c
+/firmware/esp32/avatar/happy_anim.h
+/firmware/.github/images/muse-gadgets-*.png

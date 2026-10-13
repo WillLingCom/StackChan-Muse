@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+build/
+
+# Claude Code
+.claude/
+# Interactive simulator screenshot.
+muse-simulator.ppm
+
+# Local gadget provisioning and original-device flash backups.
+.sdk-token
+/backups/

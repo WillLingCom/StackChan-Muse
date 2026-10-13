@@ -1,0 +1,193 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: ESP32 firmware
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  host-tests:
+    name: Host tests
+    runs-on: ubuntu-latest
+    container: espressif/idf:v6.0.1
+    defaults:
+      run:
+        shell: bash
+        working-directory: esp32
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      # test_noise_core links against the host's PSA Crypto library.
+      - name: Install host crypto library
+        working-directory: .
+        run: |
+          apt-get update -qq
+          apt-get install -y -qq --no-install-recommends libmbedtls-dev pkg-config
+
+      # The discovery and pairing tests compile cJSON from managed_components/,
+      # which the component manager fetches on configure.
+      - name: Fetch managed components
+        run: |
+          . "$IDF_PATH/export.sh" > /dev/null
+          idf.py -B build-host-tests -DSDKCONFIG=build-host-tests/sdkconfig reconfigure
+
+      - name: Run host tests
+        run: |
+          . "$IDF_PATH/export.sh" > /dev/null
+          python -m unittest discover -s tests -p 'test_*.py' -v
+
+  simulator:
+    name: UI simulator (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-latest
+            sanitizers: "ON"
+          - name: macOS (Apple silicon)
+            os: macos-latest
+            sanitizers: "OFF"
+          - name: macOS (Intel)
+            os: macos-15-intel
+            sanitizers: "OFF"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Configure
+        run: |
+          cmake -S esp32/simulator -B build/simulator -G Ninja \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DMUSE_SIM_SANITIZERS=${{ matrix.sanitizers }} \
+            -DMUSE_SIM_WARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        run: cmake --build build/simulator --parallel
+
+      - name: Test
+        run: ctest --test-dir build/simulator --output-on-failure
+
+  build:
+    name: Build ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    container: espressif/idf:v6.0.1
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: devkit
+            target: esp32c5
+            overlays: ""
+          - board: c6-nopsram
+            target: esp32c6
+            overlays: ";devices/sdkconfig.c6-nopsram"
+          - board: waveshare-c6-lcd-147
+            target: esp32c6
+            overlays: ";devices/sdkconfig.waveshare-c6-lcd-147"
+          - board: ideaspark
+            target: esp32
+            overlays: ";devices/sdkconfig.ideaspark"
+          - board: sensecap-indicator
+            target: esp32s3
+            overlays: ";devices/sdkconfig.sensecap-indicator"
+          - board: reterminal-e1001
+            target: esp32s3
+            overlays: ";devices/sdkconfig.reterminal-e1001"
+          - board: reterminal-e1002
+            target: esp32s3
+            overlays: ";devices/sdkconfig.reterminal-e1002"
+          - board: home-assistant-voice
+            target: esp32s3
+            overlays: ";devices/sdkconfig.home-assistant-voice"
+          - board: espressif-s3-devkitc-1
+            target: esp32s3
+            overlays: ";devices/sdkconfig.espressif-s3-devkitc-1"
+          - board: seeed-respeaker-lite
+            target: esp32s3
+            overlays: ";devices/sdkconfig.seeed-respeaker-lite"
+          - board: muse-waveshare-s3-175c
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-waveshare-s3-175c"
+          - board: muse-waveshare-s3-175
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-waveshare-s3-175"
+          - board: muse-aipi
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-aipi"
+          - board: muse-waveshare-c6-18
+            target: esp32c6
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-waveshare-c6-18"
+          - board: muse-sensecap-watcher
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-sensecap-watcher"
+          - board: muse-m5stack-cardputer-adv
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-cardputer-adv"
+          - board: muse-espressif-box-3
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-espressif-box-3"
+          - board: muse-m5stack-sticks3
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-sticks3"
+          - board: muse-m5stack-stopwatch
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-stopwatch"
+          - board: muse-m5stack-cores3
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-cores3"
+          - board: muse-guition-jc3248w535
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-guition-jc3248w535"
+          - board: muse-m5stack-stickc-plus2
+            target: esp32
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-stickc-plus2"
+          - board: muse-m5stack-core2
+            target: esp32
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-core2"
+          - board: muse-fnk0104b
+            target: esp32s3
+            overlays: ";devices/sdkconfig.muse;devices/sdkconfig.muse-fnk0104b"
+    defaults:
+      run:
+        shell: bash
+        working-directory: esp32
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      # The build fails if the app no longer fits its partition.
+      - name: Build
+        env:
+          TARGET: ${{ matrix.target }}
+          DEFAULTS: sdkconfig.defaults${{ matrix.overlays }}
+        run: |
+          . "$IDF_PATH/export.sh" > /dev/null
+          idf.py -B build -DIDF_TARGET="$TARGET" -DSDKCONFIG=build/sdkconfig \
+            -DSDKCONFIG_DEFAULTS="$DEFAULTS" build

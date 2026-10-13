@@ -1,0 +1,32 @@
+{
+  "status": "BLOCKED",
+  "reason": "Permission for Jollybot artwork and the modified renderer is not established. No asset download or import is enabled.",
+  "official_repository": "https://github.com/facebookincubator/muse-gadget-sdk",
+  "official_commit": "74a5e2d7fc895f109f83a9a1dbed705dbcd8b1ff",
+  "assets": [
+    {
+      "path": "firmware/esp32/avatar/muse_pixel.c",
+      "prototype_sha256": "02de30581ad79208488e8c387875ee0473b149940d57b5f3fb4b69a633d422f3",
+      "official_sha256": "72369c740fb9450a11491a9e5e71a5e031f3a835ab037bf03a2c17914b3fb915",
+      "matches_official_baseline": false
+    },
+    {
+      "path": "firmware/esp32/avatar/jollybot.gif",
+      "prototype_sha256": "0d0081161592406e47a29f3b6f507aec48b247c0dd74010231c8060b0d1f0cfe",
+      "official_sha256": "0d0081161592406e47a29f3b6f507aec48b247c0dd74010231c8060b0d1f0cfe",
+      "matches_official_baseline": true
+    },
+    {
+      "path": "firmware/esp32/avatar/happy_anim.c",
+      "prototype_sha256": "547e5201bcf8667a6603d3323d4f973059bbf605f20461bc09f67b30a34c5c21",
+      "official_sha256": "547e5201bcf8667a6603d3323d4f973059bbf605f20461bc09f67b30a34c5c21",
+      "matches_official_baseline": true
+    },
+    {
+      "path": "firmware/esp32/avatar/happy_anim.h",
+      "prototype_sha256": "50721fcdbaffdcf277e5b5713dbeb5d98b7f1ec7da8b4da3d67b425e165b34c1",
+      "official_sha256": "50721fcdbaffdcf277e5b5713dbeb5d98b7f1ec7da8b4da3d67b425e165b34c1",
+      "matches_official_baseline": true
+    }
+  ]
+}

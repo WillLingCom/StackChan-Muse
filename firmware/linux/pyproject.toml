@@ -1,0 +1,43 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "musegadget"
+version = "0.1.0"
+description = "Make any Linux computer into a Muse Home Link that pairs with the Muse app"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+# cryptography comes from the distro (python3-cryptography) on devices; the
+# floor is Debian 11 / Raspberry Pi OS Bullseye's 3.3.2.
+dependencies = ["cryptography>=3.3.2", "websockets>=13"]
+
+[project.scripts]
+musegadget = "musegadget.cli:main"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+musegadget = ["data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

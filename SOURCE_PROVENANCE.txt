@@ -1,0 +1,125 @@
+MuseStackChan source snapshot
+
+Primary upstream: https://github.com/facebookincubator/muse-gadget-sdk
+Upstream base commit: 74a5e2d7fc895f109f83a9a1dbed705dbcd8b1ff
+Local firmware snapshot commit: ec86c0ad42f068adcc6863f023a3f32cd960db7a
+Local snapshot branch: k151
+Includes the current working-tree simulator FreeRTOS compatibility fix.
+
+Hardware reference repositories (not vendored here):
+https://github.com/m5stack/StackChan @ 1b5765599fba8aaad1811d9a79358ccc7051f5f3
+https://github.com/m5stack/StackChan-BSP @ 8d4d6fc3b7a6be379c6317c45a02a30bff8c492e
+https://github.com/stack-chan/stack-chan @ 2f6b5a65e30278fdbd1c5114cab6d42cdb7b7a0d
+
+Publication preparation changes:
+- Source-only export; no existing .git directories or commit history.
+- Omitted private config, generated files, firmware binaries, device backups and recordings.
+- Replaced the prototype MAC in hardware documentation with a placeholder.
+- Flash helper requires K151_MAC instead of a developer-specific default.
+- Offline microphone analysis resolves its data path relative to the project.
+- Added a credential-free configuration template, README and publication checker.
+- Retained upstream copyright headers, license files and development signing fixture.
+
+Historical prototype changes relative to the upstream base (paths relative to firmware/).
+This is provenance, not a publication inventory: avatar files listed here are EXCLUDED.
+See docs/PUBLICATION_CHANGES.md for publication changes.
+
+Historical changes:
+M	esp32/avatar/muse_pixel.c
+M	esp32/components/muse/CMakeLists.txt
+M	esp32/components/muse/Kconfig
+A	esp32/components/muse/boards/board_m5stack_stackchan.c
+A	esp32/components/muse/boards/stackchan_body.c
+A	esp32/components/muse/boards/stackchan_body.h
+A	esp32/components/muse/boards/stackchan_camera.c
+A	esp32/components/muse/boards/stackchan_camera.h
+A	esp32/components/muse/boards/stackchan_dance.c
+A	esp32/components/muse/boards/stackchan_dance.h
+A	esp32/components/muse/boards/stackchan_dancer.c
+A	esp32/components/muse/boards/stackchan_dancer.h
+A	esp32/components/muse/boards/stackchan_doa.c
+A	esp32/components/muse/boards/stackchan_doa.h
+A	esp32/components/muse/boards/stackchan_gesture.c
+A	esp32/components/muse/boards/stackchan_gesture.h
+A	esp32/components/muse/boards/stackchan_head.c
+A	esp32/components/muse/boards/stackchan_head.h
+A	esp32/components/muse/boards/stackchan_head_gesture.c
+A	esp32/components/muse/boards/stackchan_head_gesture.h
+A	esp32/components/muse/boards/stackchan_imu.c
+A	esp32/components/muse/boards/stackchan_imu.h
+A	esp32/components/muse/boards/stackchan_ir.c
+A	esp32/components/muse/boards/stackchan_ir.h
+A	esp32/components/muse/boards/stackchan_ir_codec.c
+A	esp32/components/muse/boards/stackchan_ir_codec.h
+A	esp32/components/muse/boards/stackchan_mic.c
+A	esp32/components/muse/boards/stackchan_mic.h
+A	esp32/components/muse/boards/stackchan_motion.c
+A	esp32/components/muse/boards/stackchan_motion.h
+A	esp32/components/muse/boards/stackchan_py32_regs.h
+A	esp32/components/muse/boards/stackchan_rgb.c
+A	esp32/components/muse/boards/stackchan_rgb.h
+A	esp32/components/muse/boards/stackchan_servo_regs.h
+A	esp32/components/muse/boards/stackchan_sfx.c
+A	esp32/components/muse/boards/stackchan_sfx.h
+A	esp32/components/muse/boards/stackchan_tools.c
+A	esp32/components/muse/boards/stackchan_tools.h
+A	esp32/components/muse/boards/stackchan_tools_parse.c
+A	esp32/components/muse/boards/stackchan_tools_parse.h
+M	esp32/components/muse/idf_component.yml
+M	esp32/components/muse/muse_audio.c
+M	esp32/components/muse/muse_audio.h
+M	esp32/components/muse/muse_board.h
+M	esp32/components/muse/muse_chat.h
+M	esp32/components/muse/muse_chat_session.cpp
+M	esp32/components/muse/muse_input.c
+M	esp32/components/muse/muse_input.h
+M	esp32/components/muse/muse_pixel.h
+M	esp32/components/muse/muse_settings.c
+M	esp32/components/muse/muse_settings.h
+M	esp32/components/muse/muse_settings_ui.c
+M	esp32/components/muse/muse_state.c
+M	esp32/components/muse/muse_state.h
+A	esp32/components/muse/muse_tts.c
+A	esp32/components/muse/muse_tts.h
+M	esp32/components/muse/muse_ui.c
+A	esp32/components/muse/muse_vad.c
+A	esp32/components/muse/muse_vad.h
+M	esp32/components/muse/muse_voice.c
+M	esp32/components/muse/muse_voice.h
+A	esp32/devices/sdkconfig.muse-m5stack-stackchan
+M	esp32/main/app.c
+M	esp32/main/muse_glue.c
+M	esp32/main/muse_glue.h
+M	esp32/main/noise_control.cpp
+A	esp32/tests/muse_vad_harness.c
+A	esp32/tests/stackchan_dance_harness.c
+A	esp32/tests/stackchan_doa_harness.c
+A	esp32/tests/stackchan_gesture_harness.c
+A	esp32/tests/stackchan_head_gesture_harness.c
+A	esp32/tests/stackchan_ir_codec_harness.c
+A	esp32/tests/stackchan_motion_harness.c
+A	esp32/tests/stackchan_tools_parse_harness.c
+A	esp32/tests/test_muse_vad.py
+A	esp32/tests/test_stackchan_dance.py
+A	esp32/tests/test_stackchan_doa.py
+A	esp32/tests/test_stackchan_gesture.py
+A	esp32/tests/test_stackchan_head_gesture.py
+A	esp32/tests/test_stackchan_ir_codec.py
+A	esp32/tests/test_stackchan_motion.py
+A	esp32/tests/test_stackchan_py32_regs.py
+A	esp32/tests/test_stackchan_servo_regs.py
+A	esp32/tests/test_stackchan_sfx.py
+A	esp32/tests/test_stackchan_tools_parse.py
+M	esp32/tools/muse/avatar.py
+M	esp32/tools/muse/board.sh
+M	esp32/tools/muse/ports.py
+
+Phase 2 publication preparation:
+- Jollybot renderer, GIF, generated animation and banner images excluded.
+- Original rendering APIs and licensed consumers retained; no replacement artwork.
+- CJK font retained byte-for-byte; upstream license documents preserved separately.
+- ESP-IDF 6.0.1 and direct K151 dependencies pinned; JPEG 1.0.2.
+- Existing dependency lock retained as a baseline; clean resolution remains unverified.
+- Device identifier removed from muse_skill; local build paths made portable.
+- Root Apache-2.0 license, dependency notices and English documentation added.
+- No upstream or original project history was imported, rewritten or pushed.

@@ -1,0 +1,20 @@
+# Copy to private/k151.local.cfg, then fill in your own credentials locally.
+# Never commit private/k151.local.cfg, generated sdkconfig, or compiled firmware.
+# Values are compiled into the firmware image. A configured .bin is private too.
+# After changing this file's local copy, run: scripts/k151.sh reconfig
+
+# Muse SDK token: use scripts/set_token.sh for hidden terminal input.
+#CONFIG_GADGET_SDK_TOKEN="mgst_REPLACE_ME"
+
+# MiniMax TTS API key: use scripts/set_tts_key.sh for hidden terminal input.
+#CONFIG_MUSE_TTS_MINIMAX_KEY="REPLACE_ME"
+#CONFIG_MUSE_TTS_MINIMAX_VOICE="Chinese (Mandarin)_Straightforward_Boy"
+
+# Optional Wi-Fi configuration. BLE provisioning can be used instead.
+#CONFIG_HOMEHUB_WIFI_SSID="REPLACE_ME"
+#CONFIG_HOMEHUB_WIFI_PASSWORD="REPLACE_ME"
+
+# Servo zero positions vary between devices. Set your own calibrated values.
+# The board overlay contains the original prototype's calibration defaults.
+#CONFIG_MUSE_STACKCHAN_YAW_ZERO=450
+#CONFIG_MUSE_STACKCHAN_PITCH_ZERO=610

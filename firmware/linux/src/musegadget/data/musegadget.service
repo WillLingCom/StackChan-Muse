@@ -1,0 +1,36 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Keeps the device connected to its Muse. Runs as root (Bluetooth, device
+# credentials); commands run as MUSEGADGET_RUN_AS, which the installer sets
+# to the account that installed the device.
+
+[Unit]
+Description=Muse Home Link (Linux Device SDK)
+Wants=network-online.target
+After=network-online.target bluetooth.target
+
+[Service]
+Environment=PYTHONUNBUFFERED=1
+Environment=MUSEGADGET_RUN_AS=@RUN_AS@
+ExecStart=/opt/musegadget/venv/bin/musegadget run
+RuntimeDirectory=musegadget
+RuntimeDirectoryMode=0755
+StateDirectory=musegadget
+StateDirectoryMode=0700
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

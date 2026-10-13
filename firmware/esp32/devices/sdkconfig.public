@@ -1,0 +1,5 @@
+# Credential-free publication build. Load last; never use a private overlay here.
+CONFIG_GADGET_SDK_TOKEN=""
+CONFIG_MUSE_TTS_MINIMAX_KEY=""
+CONFIG_HOMEHUB_WIFI_SSID=""
+CONFIG_HOMEHUB_WIFI_PASSWORD=""

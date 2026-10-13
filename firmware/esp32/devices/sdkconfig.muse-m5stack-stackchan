@@ -1,0 +1,101 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# M5Stack StackChan K151: CoreS3 main unit (ESP32-S3, 16 MB QSPI flash, 8 MB
+# quad PSRAM, ILI9342C + FT6336U, AW88298, ES7210, AXP2101, AW9523B) on the
+# StackChan body (PY32 base controller, Si12T head touch, two SCSCL servos).
+# Native USB Serial/JTAG (303a:1001). PWR (on the AXP2101) talks.
+# Sources: the CoreS3 overlay below; m5stack/StackChan firmware @1b57655
+# (partitions.csv, main/hal); esptool flash-id on the attached unit (16 MB,
+# 0x46/0x4018). PSRAM size and mode: confirmed by the boot probe, see TEST_REPORT.md.
+# Load last, after sdkconfig.defaults and sdkconfig.muse.
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_MUSE_BOARD_M5STACK_STACKCHAN=y
+# The AW88298 and 1 W speaker are quiet at the usual 70%.
+CONFIG_MUSE_DEFAULT_VOLUME=100
+# Unused by Muse builds (the talk button confirms pairing); GPIO0 is I2S MCLK here.
+CONFIG_HOMEHUB_BUTTON_GPIO=0
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+CONFIG_ESPTOOLPY_FLASHMODE_DIO=y
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# PSRAM is required for the UI, images, voice session and tunnel. Quad, unlike
+# the BOX-3's octal part.
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_QUAD=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_FETCH_INSTRUCTIONS=y
+CONFIG_SPIRAM_RODATA=y
+CONFIG_SPIRAM_XIP_FROM_PSRAM=y
+CONFIG_SPIRAM_ALLOW_STACK_EXTERNAL_MEMORY=y
+CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB=y
+CONFIG_ESP32S3_DATA_CACHE_64KB=y
+CONFIG_ESP32S3_DATA_CACHE_LINE_64B=y
+CONFIG_LV_DRAW_SW_DRAW_UNIT_CNT=2
+CONFIG_BT_NIMBLE_MEM_ALLOC_MODE_EXTERNAL=y
+CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP=y
+CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY=y
+CONFIG_SPIRAM_IGNORE_NOTFOUND=n
+CONFIG_ESP_WIFI_STATIC_TX_BUFFER_NUM=8
+
+# Keep the BSP's SPI transfer allocation and our LVGL buffers small.
+CONFIG_BSP_LCD_DRAW_BUF_HEIGHT=10
+CONFIG_BSP_LCD_DRAW_BUF_DOUBLE=y
+
+# Replies are mostly Chinese: captions fall back to Unifont 16x16 for CJK
+# (components/muse/fonts/README.md; about 850 KB of flash, no RAM).
+CONFIG_MUSE_CJK_FONT=y
+# Tap, double tap, long-press talk and the head-touch shy reaction.
+CONFIG_MUSE_AVATAR_GESTURES=y
+# The "Hands-free talk" setting (off until the user turns it on).
+CONFIG_MUSE_HANDS_FREE=y
+# Experimental: turn to a near talker (a settings switch, off by default).
+CONFIG_MUSE_STACKCHAN_DOA=y
+# Spoken replies through MiniMax (paid, the user's account). Silent until
+# CONFIG_MUSE_TTS_MINIMAX_KEY is set in the private overlay (CONFIG.example).
+CONFIG_MUSE_TTS_MINIMAX=y
+
+# This unit's factory servo zeros, read offline from its factory NVS backup
+# (servo/zero_pos_1, zero_pos_2; see HARDWARE_MAP.md). Another unit: change.
+CONFIG_MUSE_STACKCHAN_YAW_ZERO=450
+CONFIG_MUSE_STACKCHAN_PITCH_ZERO=610
+# Off until the head sensor is shown to catch a hand during pitch motion: the
+# user reported a nod not stopping under their hand, and the log showed no
+# head readings during the first two pet nods (later ones stopped in 81/187 ms).
+CONFIG_MUSE_STACKCHAN_PET_NOD=n
+
+# Camera (S4): the CoreS3's GC0308 over DVP, 320x240 YUYV, stills only
+# (HARDWARE_MAP.md; factory firmware uses the 320x240 YUV422 mode too).
+CONFIG_CAMERA_GC0308=y
+CONFIG_CAMERA_GC0308_DVP_YUV422_YUYV_320X240_20FPS=y
+CONFIG_ESP_VIDEO_ENABLE_DVP_VIDEO_DEVICE=y
+# The DVP driver keeps a DMA bounce buffer in internal RAM while streaming
+# (esp_cam_sensor driver_dvp, default 32 KB): with Wi-Fi up a capture left
+# 12 KB internal free, 4 KB at the JPEG encode (S7 audit). 12 KB halves of
+# 6144 B divide the 320x240 YUYV frame exactly (153600 = 25 x 6144).
+CONFIG_CAM_CTRL_DVP_DMA_BUFFER_SIZE=12288
+
+# Development unit: no OTA. sdkconfig.muse turns it on for UI boards; an update
+# pushed over control/BLE would replace this firmware with a generic one.
+CONFIG_HOMEHUB_OTA_ENABLED=n
+# Never let a build turn on anything that burns eFuses (config_store.c generates
+# an HMAC key into eFuse when NVS encryption is compiled in).
+CONFIG_NVS_ENCRYPTION=n
+CONFIG_SECURE_BOOT=n
+CONFIG_SECURE_FLASH_ENC_ENABLED=n
+CONFIG_HOMEHUB_PAIRING_EFUSE_AUTH=n
+
+# Screen snapshots over USB (console "p"; tools/muse/snap.py): for checking prompts.
+CONFIG_LV_USE_SNAPSHOT=y
